@@ -1,0 +1,29 @@
+[
+  {
+    "id": 1,
+    "title": "producto prueba",
+    "description": "Este es un producto prueba",
+    "price": 200,
+    "img": "Sin imagen",
+    "code": "abc123",
+    "stock": 25
+  },
+  {
+    "id": 2,
+    "title": "zapatillas converse",
+    "description": "Color rojo",
+    "price": 5000,
+    "img": "Sin imagen",
+    "code": "fff333",
+    "stock": 3
+  },
+  {
+    "id": 3,
+    "title": "zapatillas nike",
+    "description": "Color negro",
+    "price": 8000,
+    "img": "Sin imagen",
+    "code": "eee222",
+    "stock": 5
+  }
+]
