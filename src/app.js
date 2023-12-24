@@ -20,7 +20,7 @@ app.listen(PUERTO, () => {
 //Rutas
 
 app.get("/", (req, res) => {
-  res.send("Bienvenido a la tienda");
+  res.send("Bienvenido a la tienda!!");
 });
 
 //Limite

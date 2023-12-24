@@ -1,8 +1,8 @@
 [
   {
     "id": 1,
-    "title": "producto prueba",
-    "description": "Este es un producto prueba",
+    "title": "zapatillas fila",
+    "description": "Color blanco",
     "price": 200,
     "img": "Sin imagen",
     "code": "abc123",
@@ -24,6 +24,69 @@
     "price": 8000,
     "img": "Sin imagen",
     "code": "eee222",
+    "stock": 5
+  },
+  {
+    "id": 4,
+    "title": "zapatillas new balance",
+    "description": "Color verde",
+    "price": 8000,
+    "img": "Sin imagen",
+    "code": "eee555",
+    "stock": 5
+  },
+  {
+    "id": 5,
+    "title": "zapatillas 47street",
+    "description": "Color morado",
+    "price": 8000,
+    "img": "Sin imagen",
+    "code": "aaa222",
+    "stock": 5
+  },
+  {
+    "id": 6,
+    "title": "zapatillas topper",
+    "description": "Color negro",
+    "price": 8000,
+    "img": "Sin imagen",
+    "code": "eee232",
+    "stock": 5
+  },
+  {
+    "id": 7,
+    "title": "zapatillas Adidas",
+    "description": "Color blanco",
+    "price": 8000,
+    "img": "Sin imagen",
+    "code": "eee229",
+    "stock": 5
+  },
+  {
+    "id": 8,
+    "title": "zapatillas Puma",
+    "description": "Color azul",
+    "price": 8000,
+    "img": "Sin imagen",
+    "code": "eae222",
+    "stock": 5
+  },
+  {
+    "id": 9,
+    "title": "zapatillas reebok",
+    "description": "Color negro",
+    "price": 8000,
+    "img": "Sin imagen",
+    "code": "yui222",
+    "stock": 5
+  },
+  {
+    "id": 10,
+    "title": "zapatillas converse",
+    "description": "Color negro",
+    "price": 8000,
+    "img": "Sin imagen",
+    "code": "ooo000",
     "stock": 5
   }
 ]
