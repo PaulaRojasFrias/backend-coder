@@ -46,9 +46,17 @@ router.get("/:id", async (req, res) => {
 //post
 
 router.post("/", (req, res) => {
-  const nuevoProducto = req.body;
-  manager.addProduct(nuevoProducto);
+  const newProduct = req.body;
+  manager.addProduct(newProduct);
   res.send({ status: "success", message: "Producto agregado" });
 });
 
 module.exports = router;
+
+//update
+router.put("/id", (req, res) => {
+  const { id } = req.params;
+  const updatedProduct = req.body;
+  manager.updateProduct(id, updatedProduct);
+  res.send({ status: "success", message: "Producto actualizado" });
+});
