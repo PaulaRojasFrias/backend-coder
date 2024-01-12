@@ -101,6 +101,8 @@ class ProductManager {
       const index = arrayProductos.findIndex((item) => item.id === id);
 
       if (index !== -1) {
+        //para que no se actualice el id
+        productoActualizado.id = id;
         arrayProductos.splice(index, 1, productoActualizado);
         await this.guardarArchivo(arrayProductos);
       } else {
