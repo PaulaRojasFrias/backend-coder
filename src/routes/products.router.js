@@ -54,9 +54,28 @@ router.post("/", (req, res) => {
 module.exports = router;
 
 //update
-router.put("/id", (req, res) => {
+router.put("/:id", (req, res) => {
   const { id } = req.params;
   const updatedProduct = req.body;
   manager.updateProduct(id, updatedProduct);
   res.send({ status: "success", message: "Producto actualizado" });
+});
+
+//delete
+router.delete("/:id", (req, res) => {
+  const { id } = req.params;
+  const myProducts = manager.leerArchivo();
+  const indexToDelete = myProducts.findIndex((product) => product.id === id);
+
+  if (indexToDelete !== -1) {
+    myProducts.splice(indexToDelete, 1);
+
+    manager.guardarArchivo(myProducts);
+
+    res.json({ status: "success", message: "Producto eliminado" });
+  } else {
+    res
+      .status(404)
+      .json({ status: "error", message: "Producto no encontrado" });
+  }
 });

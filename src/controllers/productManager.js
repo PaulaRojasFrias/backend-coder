@@ -9,9 +9,29 @@ class ProductManager {
   }
 
   async addProduct(nuevoObjeto) {
-    let { title, description, price, img, code, stock } = nuevoObjeto;
+    let {
+      title,
+      description,
+      price,
+      img,
+      code,
+      stock,
+      status,
+      category,
+      thumbnails,
+    } = nuevoObjeto;
+    status = status ?? true;
 
-    if (!title || !description || !price || !img || !code || !stock) {
+    if (
+      !title ||
+      !description ||
+      !price ||
+      !img ||
+      !code ||
+      !stock ||
+      !status ||
+      !category
+    ) {
       console.log("Todos los campos son obligatorios");
       return;
     }

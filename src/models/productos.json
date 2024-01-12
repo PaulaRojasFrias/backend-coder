@@ -6,7 +6,10 @@
     "price": 200,
     "img": "Sin imagen",
     "code": "abc123",
-    "stock": 25
+    "stock": 25,
+    "status": true,
+    "category": "shoes",
+    "thumbnails": ["/img/thumbnail1.jpg", "/img/thumbnail2.jpg"]
   },
   {
     "id": 2,
@@ -15,7 +18,10 @@
     "price": 5000,
     "img": "Sin imagen",
     "code": "fff333",
-    "stock": 3
+    "stock": 3,
+    "status": true,
+    "category": "shoes",
+    "thumbnails": ["/img/thumbnail1.jpg", "/img/thumbnail2.jpg"]
   },
   {
     "id": 3,
@@ -24,7 +30,10 @@
     "price": 8000,
     "img": "Sin imagen",
     "code": "eee222",
-    "stock": 5
+    "stock": 5,
+    "status": true,
+    "category": "shoes",
+    "thumbnails": ["/img/thumbnail1.jpg", "/img/thumbnail2.jpg"]
   },
   {
     "id": 4,
@@ -33,7 +42,10 @@
     "price": 8000,
     "img": "Sin imagen",
     "code": "eee555",
-    "stock": 5
+    "stock": 5,
+    "status": true,
+    "category": "shoes",
+    "thumbnails": ["/img/thumbnail1.jpg", "/img/thumbnail2.jpg"]
   },
   {
     "id": 5,
@@ -42,7 +54,10 @@
     "price": 8000,
     "img": "Sin imagen",
     "code": "aaa222",
-    "stock": 5
+    "stock": 5,
+    "status": true,
+    "category": "shoes",
+    "thumbnails": ["/img/thumbnail1.jpg", "/img/thumbnail2.jpg"]
   },
   {
     "id": 6,
@@ -51,7 +66,10 @@
     "price": 8000,
     "img": "Sin imagen",
     "code": "eee232",
-    "stock": 5
+    "stock": 5,
+    "status": true,
+    "category": "shoes",
+    "thumbnails": ["/img/thumbnail1.jpg", "/img/thumbnail2.jpg"]
   },
   {
     "id": 7,
@@ -60,7 +78,10 @@
     "price": 8000,
     "img": "Sin imagen",
     "code": "eee229",
-    "stock": 5
+    "stock": 5,
+    "status": true,
+    "category": "shoes",
+    "thumbnails": ["/img/thumbnail1.jpg", "/img/thumbnail2.jpg"]
   },
   {
     "id": 8,
@@ -69,7 +90,10 @@
     "price": 8000,
     "img": "Sin imagen",
     "code": "eae222",
-    "stock": 5
+    "stock": 5,
+    "status": true,
+    "category": "shoes",
+    "thumbnails": ["/img/thumbnail1.jpg", "/img/thumbnail2.jpg"]
   },
   {
     "id": 9,
@@ -78,7 +102,10 @@
     "price": 8000,
     "img": "Sin imagen",
     "code": "yui222",
-    "stock": 5
+    "stock": 5,
+    "status": true,
+    "category": "shoes",
+    "thumbnails": ["/img/thumbnail1.jpg", "/img/thumbnail2.jpg"]
   },
   {
     "id": 10,
@@ -87,6 +114,9 @@
     "price": 8000,
     "img": "Sin imagen",
     "code": "ooo000",
-    "stock": 5
+    "stock": 5,
+    "status": true,
+    "category": "shoes",
+    "thumbnails": ["/img/thumbnail1.jpg", "/img/thumbnail2.jpg"]
   }
 ]
