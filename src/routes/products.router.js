@@ -51,8 +51,6 @@ router.post("/", (req, res) => {
   res.send({ status: "success", message: "Producto agregado" });
 });
 
-module.exports = router;
-
 //update
 router.put("/:id", (req, res) => {
   const { id } = req.params;
@@ -79,3 +77,5 @@ router.delete("/:id", (req, res) => {
       .json({ status: "error", message: "Producto no encontrado" });
   }
 });
+
+module.exports = router;
