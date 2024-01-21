@@ -1,9 +1,30 @@
 const express = require("express");
 const router = express.Router();
+const ProductManager = require("../controllers/productManager.js");
+const productManager = new ProductManager("./src/models/productos.json");
 
-//aca va la logica y las rutas por ej de real time products
-router.get("/", (req, res) => {
-  res.render("index");
+router.get("/", async (req, res) => {
+  try {
+    const productos = await productManager.getProducts();
+    res.render("index", {
+      productos: productos,
+    });
+  } catch (error) {
+    console.error("Error al obtener productos", error);
+    res.status(500).json({
+      error: "Error interno del servidor",
+    });
+  }
+});
+
+router.get("/realtimeproducts", async (req, res) => {
+  try {
+    res.render("realtimeproducts");
+  } catch (error) {
+    res.status(500).json({
+      error: "Error interno del servidor",
+    });
+  }
 });
 
 module.exports = router;

@@ -7,6 +7,9 @@ const PUERTO = 8080;
 
 const viewsRouter = require("./routes/views.router.js");
 
+const ProductManager = require("./controllers/productManager.js");
+const productManager = new ProductManager("./src/models/productos.json");
+
 //Handlebars
 const exphbs = require("express-handlebars");
 
@@ -36,11 +39,24 @@ const httpServer = app.listen(PUERTO, () => {
 const io = socket(httpServer);
 
 //evento connection
-io.on("connection", (socket) => {
+io.on("connection", async (socket) => {
   console.log("Un cliente se conecto");
   socket.on("message", (data) => {
     console.log(data);
     io.sockets.emit("message", data);
   });
   socket.emit("saludito", "Hola cliente, ¿cómo estas?");
+  socket.emit("productos", await productManager.getProducts());
+
+  socket.on("eliminarProducto", async (id) => {
+    await productManager.deleteProduct(id);
+
+    io.sockets.emit("productos", await productManager.getProducts());
+  });
+
+  socket.on("agregarProducto", async (producto) => {
+    await productManager.addProduct(producto);
+
+    io.sockets.emit("productos", await productManager.getProducts());
+  });
 });
