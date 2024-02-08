@@ -11,17 +11,19 @@ const manager = new ProductManager();
 //Limite
 router.get("/", async (req, res) => {
   try {
-    const misProductos = await manager.leerArchivo();
-    let limit = parseInt(req.query.limit);
+    const myProducts = await manager.getProducts();
+    const limit = req.query.limit;
     if (limit) {
       const products = misProductos.slice(0, limit);
       return res.json(products);
     } else {
-      return res.json(misProductos);
+      return res.json(myProducts);
     }
   } catch (error) {
-    console.log(error);
-    throw new Error("Se produjo un error al procesar la solicitud.");
+    console.log("Error al obtener los productos", error);
+    res.status(500).json({
+      error: "Error interno del servidor",
+    });
   }
 });
 
@@ -29,52 +31,71 @@ router.get("/", async (req, res) => {
 
 router.get("/:id", async (req, res) => {
   try {
-    let id = parseInt(req.params.id);
-    const product = await manager.getProductsById(id);
+    const id = req.params.id;
+    const product = await manager.getProductById(id);
 
     if (product) {
-      return res.send(product);
+      return res.json(product);
     } else {
-      return res.send("Producto no encontrado");
+      return res.json({
+        error: "Producto no encontrado",
+      });
     }
   } catch (error) {
-    console.log(error);
-    throw new Error("Se produjo un error al procesar la solicitud.");
+    console.log("Error al obtener el producto", error);
+    res.status(500).json({
+      error: "Error interno del servidor",
+    });
   }
 });
 
 //post
 
-router.post("/", (req, res) => {
+router.post("/", async (req, res) => {
   const newProduct = req.body;
-  manager.addProduct(newProduct);
-  res.send({ status: "success", message: "Producto agregado" });
+  try {
+    await manager.addProduct(newProduct);
+    res.status(201).json({
+      message: "Producto agregado exitosamente",
+    });
+  } catch (error) {
+    console.error("Error al agregar producto", error);
+    res.status(500).json({
+      error: "Error interno del servidor",
+    });
+  }
 });
 
 //update
-router.put("/:id", (req, res) => {
-  const { id } = req.params;
+router.put("/:id", async (req, res) => {
+  const id = req.params.id;
   const updatedProduct = req.body;
-  manager.updateProduct(id, updatedProduct);
-  res.send({ status: "success", message: "Producto actualizado" });
+  try {
+    await manager.updateProduct(id, updatedProduct);
+    res.json({
+      message: "Producto actualizado exitosamente",
+    });
+  } catch (error) {
+    console.error("Error al actualizar producto", error);
+    res.status(500).json({
+      error: "Error interno del servidor",
+    });
+  }
 });
 
 //delete
-router.delete("/:id", (req, res) => {
-  const { id } = req.params;
-  const myProducts = manager.leerArchivo();
-  const indexToDelete = myProducts.findIndex((product) => product.id === id);
-
-  if (indexToDelete !== -1) {
-    myProducts.splice(indexToDelete, 1);
-
-    manager.guardarArchivo(myProducts);
-
-    res.json({ status: "success", message: "Producto eliminado" });
-  } else {
-    res
-      .status(404)
-      .json({ status: "error", message: "Producto no encontrado" });
+router.delete("/:id", async (req, res) => {
+  const id = req.params.id;
+  try {
+    await manager.deleteProduct(id);
+    res.json({
+      message: "Producto eliminado exitosamente",
+    });
+  } catch (error) {
+    console.error("Error al eliminar producto", error);
+    res.status(500).json({
+      error: "Error interno del servidor",
+    });
   }
 });
 
