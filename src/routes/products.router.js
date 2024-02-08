@@ -2,9 +2,9 @@ const express = require("express");
 const router = express.Router();
 
 //Productos
-const ProductManager = require("../controllers/productManager.js");
+const ProductManager = require("../dao/db/product-manager-db.js");
 
-const manager = new ProductManager("./src/models/productos.json");
+const manager = new ProductManager();
 
 //Rutas
 

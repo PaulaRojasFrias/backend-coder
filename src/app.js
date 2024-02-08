@@ -5,6 +5,9 @@ const app = express();
 
 const PUERTO = 8080;
 
+//mongoose
+require("./database.js");
+
 const viewsRouter = require("./routes/views.router.js");
 
 const ProductManager = require("./controllers/productManager.js");
@@ -18,7 +21,7 @@ app.set("view engine", "handlebars");
 app.set("views", "./src/views");
 
 //Socket.io
-const socket = require("socket.io");
+// const socket = require("socket.io");
 
 //Rutas
 const productsRouter = require("./routes/products.router.js");
@@ -36,27 +39,27 @@ const httpServer = app.listen(PUERTO, () => {
   console.log(`Escuchando con express en http://localhost:${PUERTO}`);
 });
 
-const io = socket(httpServer);
+// const io = socket(httpServer);
 
-//evento connection
-io.on("connection", async (socket) => {
-  console.log("Un cliente se conecto");
-  socket.on("message", (data) => {
-    console.log(data);
-    io.sockets.emit("message", data);
-  });
-  socket.emit("saludito", "Hola cliente, ¿cómo estas?");
-  socket.emit("productos", await productManager.getProducts());
+// //evento connection
+// io.on("connection", async (socket) => {
+//   console.log("Un cliente se conecto");
+//   socket.on("message", (data) => {
+//     console.log(data);
+//     io.sockets.emit("message", data);
+//   });
+//   socket.emit("saludito", "Hola cliente, ¿cómo estas?");
+//   socket.emit("productos", await productManager.getProducts());
 
-  socket.on("eliminarProducto", async (id) => {
-    await productManager.deleteProduct(id);
+//   socket.on("eliminarProducto", async (id) => {
+//     await productManager.deleteProduct(id);
 
-    io.sockets.emit("productos", await productManager.getProducts());
-  });
+//     io.sockets.emit("productos", await productManager.getProducts());
+//   });
 
-  socket.on("agregarProducto", async (producto) => {
-    await productManager.addProduct(producto);
+//   socket.on("agregarProducto", async (producto) => {
+//     await productManager.addProduct(producto);
 
-    io.sockets.emit("productos", await productManager.getProducts());
-  });
-});
+//     io.sockets.emit("productos", await productManager.getProducts());
+//   });
+// });
