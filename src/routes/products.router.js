@@ -1,24 +1,44 @@
 const express = require("express");
 const router = express.Router();
 
-//Productos
+const ProductModel = require("../dao/models/product.model.js");
 const ProductManager = require("../dao/db/product-manager-db.js");
 
 const manager = new ProductManager();
 
 //Rutas
 
-//Limite
 router.get("/", async (req, res) => {
-  try {
-    const myProducts = await manager.getProducts();
-    const limit = req.query.limit;
-    if (limit) {
-      const products = misProductos.slice(0, limit);
-      return res.json(products);
-    } else {
-      return res.json(myProducts);
+  const limit = req.query.limit ? parseInt(req.query.limit) : 10;
+  const page = req.query.page || 1;
+  let sort = req.query.sort;
+  const category = req.query.category;
+  const stock = req.query.stock;
+  let query = {};
+
+  if (category) {
+    query.category = category;
+  }
+
+  if (stock) {
+    query.stock = stock;
+  }
+
+  if (sort) {
+    if (sort === "asc") {
+      sort = { price: 1 };
+    } else if ((sort = "desc")) {
+      sort = { price: -1 };
     }
+  }
+  try {
+    const myProducts = await ProductModel.paginate(query, {
+      limit,
+      page,
+      sort,
+    });
+    res.render("products", myProducts);
+    console.log(myProducts);
   } catch (error) {
     console.log("Error al obtener los productos", error);
     res.status(500).json({

@@ -45,28 +45,11 @@ class ProductManager {
 
   async getProducts() {
     try {
-      const limit = req.query.limit ? parseInt(req.query.limit) : 10;
-      const page = req.query.page ? parseInt(req.query.page) : 1;
-      const sort = req.query.sort;
-      const query = req.query.query;
-      // const result = await ProductModel.aggregate([
-      //   {
-      //     $limit: limit,
-      //   },
-      //   {
-      //     $sort: {
-      //       total: sort,
-      //     },
-      //   },
-      // ]);
-      const result = [{ $limit: limit }];
-      const products = await ProductModel.aggregate(result);
+      const products = await ProductModel.find();
+      console.log(products);
       return products;
-      // const products = await ProductModel.find();
-      // return products;
     } catch (error) {
       console.log("Error al obtener los productos", error);
-      res.status(500).send("Error en el servidor");
     }
   }
 
