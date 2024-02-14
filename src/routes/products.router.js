@@ -37,8 +37,22 @@ router.get("/", async (req, res) => {
       page,
       sort,
     });
-    res.render("products", myProducts);
-    console.log(myProducts);
+    const myProductsResult = myProducts.docs.map((product) => {
+      const { _id, ...rest } = product.toObject();
+      return rest;
+    });
+
+    console.log(myProductsResult);
+    res.render("products", {
+      products: myProductsResult,
+      hasPrevPage: myProducts.hasPrevPage,
+      hasNextPage: myProducts.hasNextPage,
+      prevPage: myProducts.prevPage,
+      nextPage: myProducts.nextPage,
+      currentPage: myProducts.page,
+      totalPages: myProducts.totalPages,
+    });
+    //console.log(myProducts);
   } catch (error) {
     console.log("Error al obtener los productos", error);
     res.status(500).json({
