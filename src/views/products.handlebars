@@ -3,14 +3,16 @@
   {{#each products}}
     <li><h2>{{this.title}}</h2>
       <p>Descripcion : {{this.description}}</p>
-      <p>Precio: {{this.price}}</p></li>
+      <p>Precio: {{this.price}}</p>
+      <p>Category: {{this.category}} </p></li>
+    <button> Agregar al Carrito </button>
   {{/each}}
 </ul>
 {{#if hasNextPage}}
-  <a href="/?page={{nextPage}}">Siguiente</a>
+  <a href="/products?page={{nextPage}}">Siguiente</a>
 {{/if}}
 {{#if hasPrevPage}}
-  <a href="/?page={{prevPage}}">Anterior</a>
+  <a href="/products?page={{prevPage}}">Anterior</a>
 {{/if}}
 
 <p>Pagina{{currentPage}} de {{totalPages}} </p>

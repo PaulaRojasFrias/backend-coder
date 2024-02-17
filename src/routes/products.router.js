@@ -44,6 +44,7 @@ router.get("/", async (req, res) => {
 
     console.log(myProductsResult);
     res.render("products", {
+      status: "success",
       products: myProductsResult,
       hasPrevPage: myProducts.hasPrevPage,
       hasNextPage: myProducts.hasNextPage,
@@ -51,6 +52,12 @@ router.get("/", async (req, res) => {
       nextPage: myProducts.nextPage,
       currentPage: myProducts.page,
       totalPages: myProducts.totalPages,
+      prevLink: myProducts.hasPrevPage
+        ? `/api/products?limit=${limit}&page=${myProducts.prevPage}&sort=${sort}&category=${category}&stock=${stock}`
+        : null,
+      nextLink: myProducts.hasNextPage
+        ? `/api/products?limit=${limit}&page=${myProducts.nextPage}&sort=${sort}&category=${category}&stock=${stock}`
+        : null,
     });
     //console.log(myProducts);
   } catch (error) {
