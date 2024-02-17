@@ -42,16 +42,16 @@ router.get("/", async (req, res) => {
       return rest;
     });
 
-    console.log(myProductsResult);
+    console.log(myProducts);
     res.render("products", {
       status: "success",
       products: myProductsResult,
-      hasPrevPage: myProducts.hasPrevPage,
-      hasNextPage: myProducts.hasNextPage,
+      totalPages: myProducts.totalPages,
       prevPage: myProducts.prevPage,
       nextPage: myProducts.nextPage,
       currentPage: myProducts.page,
-      totalPages: myProducts.totalPages,
+      hasPrevPage: myProducts.hasPrevPage,
+      hasNextPage: myProducts.hasNextPage,
       prevLink: myProducts.hasPrevPage
         ? `/api/products?limit=${limit}&page=${myProducts.prevPage}&sort=${sort}&category=${category}&stock=${stock}`
         : null,
@@ -59,7 +59,6 @@ router.get("/", async (req, res) => {
         ? `/api/products?limit=${limit}&page=${myProducts.nextPage}&sort=${sort}&category=${category}&stock=${stock}`
         : null,
     });
-    //console.log(myProducts);
   } catch (error) {
     console.log("Error al obtener los productos", error);
     res.status(500).json({
