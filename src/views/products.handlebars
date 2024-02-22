@@ -9,10 +9,10 @@
   {{/each}}
 </ul>
 {{#if hasNextPage}}
-  <a href="/products?page={{nextPage}}">Siguiente</a>
+  <a href="/api/products?limit={{limit}}&page={{nextPage}}">Siguiente</a>
 {{/if}}
 {{#if hasPrevPage}}
-  <a href="/products?page={{prevPage}}">Anterior</a>
+  <a href="/api/products?limit={{limit}}&page={{prevPage}}">Anterior</a>
 {{/if}}
 
-<p>Pagina{{currentPage}} de {{totalPages}} </p>
+<p>Página {{currentPage}} de {{totalPages}} </p>

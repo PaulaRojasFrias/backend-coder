@@ -27,7 +27,7 @@ router.get("/", async (req, res) => {
   if (sort) {
     if (sort === "asc") {
       sort = { price: 1 };
-    } else if ((sort = "desc")) {
+    } else if (sort === "desc") {
       sort = { price: -1 };
     }
   }
@@ -58,6 +58,7 @@ router.get("/", async (req, res) => {
       nextLink: myProducts.hasNextPage
         ? `/api/products?limit=${limit}&page=${myProducts.nextPage}&sort=${sort}&category=${category}&stock=${stock}`
         : null,
+      limit: limit,
     });
   } catch (error) {
     console.log("Error al obtener los productos", error);
