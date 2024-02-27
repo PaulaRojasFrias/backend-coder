@@ -2,9 +2,72 @@ const express = require("express");
 const router = express.Router();
 const CartManager = require("../dao/db/cart-manager-db.js");
 const cartManager = new CartManager();
+const ProductModel = require("../dao/models/product.model.js");
+const ProductManager = require("../dao/db/product-manager-db.js");
+const productmanager = new ProductManager();
 
 router.get("/", async (req, res) => {
   res.send("Bienvendido a la tienda!");
+});
+
+router.get("/products", async (req, res) => {
+  const limit = req.query.limit ? parseInt(req.query.limit) : 10;
+  const page = req.query.page || 1;
+  let sort = req.query.sort;
+  const category = req.query.category;
+  const stock = req.query.stock;
+  let query = {};
+
+  if (category) {
+    query.category = category;
+  }
+
+  if (stock) {
+    query.stock = stock;
+  }
+
+  if (sort) {
+    if (sort === "asc") {
+      sort = { price: 1 };
+    } else if (sort === "desc") {
+      sort = { price: -1 };
+    }
+  }
+
+  try {
+    const myProducts = await ProductModel.paginate(query, {
+      limit,
+      page,
+      sort,
+    });
+    const myProductsResult = myProducts.docs.map((product) => {
+      const { _id, ...rest } = product.toObject();
+      return rest;
+    });
+
+    res.render("products", {
+      status: "success",
+      products: myProductsResult,
+      totalPages: myProducts.totalPages,
+      prevPage: myProducts.prevPage,
+      nextPage: myProducts.nextPage,
+      currentPage: myProducts.page,
+      hasPrevPage: myProducts.hasPrevPage,
+      hasNextPage: myProducts.hasNextPage,
+      prevLink: myProducts.hasPrevPage
+        ? `/products?page=${myProducts.prevPage}&sort=${sort}&category=${category}&stock=${stock}`
+        : null,
+      nextLink: myProducts.hasNextPage
+        ? `/products?page=${myProducts.nextPage}&sort=${sort}&category=${category}&stock=${stock}`
+        : null,
+      limit: limit,
+    });
+  } catch (error) {
+    console.error("Error al obtener los productos", error);
+    res.status(500).json({
+      error: "Error interno del servidor",
+    });
+  }
 });
 
 router.get("/carts/:cid", async (req, res) => {

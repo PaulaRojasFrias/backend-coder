@@ -42,8 +42,8 @@ router.get("/", async (req, res) => {
       return rest;
     });
 
-    console.log(myProducts);
-    res.render("products", {
+    //console.log(myProducts);
+    res.json({
       status: "success",
       products: myProductsResult,
       totalPages: myProducts.totalPages,
@@ -58,7 +58,6 @@ router.get("/", async (req, res) => {
       nextLink: myProducts.hasNextPage
         ? `/api/products?limit=${limit}&page=${myProducts.nextPage}&sort=${sort}&category=${category}&stock=${stock}`
         : null,
-      limit: limit,
     });
   } catch (error) {
     console.log("Error al obtener los productos", error);
