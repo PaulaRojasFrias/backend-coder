@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const UserModel = require("../model/user.model.js");
+const UserModel = require("../dao/models/user.model");
 
 router.post("/", async (req, res) => {
   const { first_name, last_name, email, password, age } = req.body;
