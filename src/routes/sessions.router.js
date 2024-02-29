@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const UserModel = require("../dao/models/user.model");
 
-router.post("/sessionlogin", async (req, res) => {
+router.post("/login", async (req, res) => {
   const { email, password } = req.body;
   try {
     const user = await UserModel.findOne({ email: email });
@@ -10,7 +10,14 @@ router.post("/sessionlogin", async (req, res) => {
     if (user) {
       if (user.password === password) {
         req.session.login = true;
-        res.status(200).send({ message: "Login correcto" });
+        req.session.user = {
+          email: user.email,
+          age: user.age,
+          first_name: user.first_name,
+          last_name: user.last_name,
+        };
+
+        res.redirect("/products");
       } else {
         res.status(401).send({ error: "Contraseña no valida" });
       }
@@ -25,6 +32,7 @@ router.post("/sessionlogin", async (req, res) => {
 router.get("/logout", (req, res) => {
   if (req.session.login) {
     req.session.destroy();
+    res.redirect("/login");
   }
   res.status(200).send({ message: "Login eliminado" });
 });

@@ -61,6 +61,7 @@ router.get("/products", async (req, res) => {
         ? `/products?page=${myProducts.nextPage}&sort=${sort}&category=${category}&stock=${stock}`
         : null,
       limit: limit,
+      user: req.session.user,
     });
   } catch (error) {
     console.error("Error al obtener los productos", error);
@@ -91,6 +92,14 @@ router.get("/carts/:cid", async (req, res) => {
     console.error("Error al obtener el carrito", error);
     res.status(500).json({ error: "Error interno del servidor" });
   }
+});
+
+router.get("/login", (req, res) => {
+  res.render("login");
+});
+
+router.get("/register", (req, res) => {
+  res.render("register");
 });
 
 module.exports = router;
