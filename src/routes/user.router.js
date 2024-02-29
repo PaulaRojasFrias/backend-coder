@@ -12,13 +12,21 @@ router.post("/", async (req, res) => {
         .status(400)
         .send({ error: "El correo electronico ya se encuentra registrado" });
     }
+    if (email === "adminCoder@coder.com" && password === "adminCod3r123") {
+      role = "admin";
+    } else {
+      role = "usuario";
+    }
+
     const newUser = await UserModel.create({
       first_name,
       last_name,
       email,
       password,
       age,
+      role: role,
     });
+
     req.session.login = true;
     req.session.user = { ...newUser._doc };
     res.status(200).send({ message: "Usuario creado con exito" });

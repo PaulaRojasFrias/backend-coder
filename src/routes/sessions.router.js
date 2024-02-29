@@ -9,12 +9,19 @@ router.post("/login", async (req, res) => {
 
     if (user) {
       if (user.password === password) {
+        if (email === "adminCoder@coder.com" && password === "adminCod3r123") {
+          req.session.role = "admin";
+        } else {
+          req.session.role = "usuario";
+        }
+
         req.session.login = true;
         req.session.user = {
           email: user.email,
           age: user.age,
           first_name: user.first_name,
           last_name: user.last_name,
+          role: req.session.role,
         };
 
         res.redirect("/products");

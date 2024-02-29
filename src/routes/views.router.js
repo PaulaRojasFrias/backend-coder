@@ -17,6 +17,8 @@ router.get("/products", async (req, res) => {
   const category = req.query.category;
   const stock = req.query.stock;
   let query = {};
+  const userRole = req.session.role;
+  const isAdmin = userRole === "admin" ? true : false;
 
   if (category) {
     query.category = category;
@@ -62,6 +64,7 @@ router.get("/products", async (req, res) => {
         : null,
       limit: limit,
       user: req.session.user,
+      isAdmin: isAdmin,
     });
   } catch (error) {
     console.error("Error al obtener los productos", error);

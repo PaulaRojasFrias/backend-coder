@@ -23,6 +23,10 @@ const userSchema = mongoose.Schema({
     type: Number,
     required: true,
   },
+  role: {
+    type: String,
+    required: true,
+  },
 });
 
 const UserModel = mongoose.model("user", userSchema);
