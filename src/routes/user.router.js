@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const UserModel = require("../dao/models/user.model");
+const { createHash } = require("../utils/hashBcrypt");
 
 router.post("/", async (req, res) => {
   const { first_name, last_name, email, password, age } = req.body;
@@ -22,7 +23,7 @@ router.post("/", async (req, res) => {
       first_name,
       last_name,
       email,
-      password,
+      password: createHash(password),
       age,
       role: role,
     });

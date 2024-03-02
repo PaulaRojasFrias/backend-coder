@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const UserModel = require("../dao/models/user.model");
+const { isValidPassword } = require("../utils/hashBcrypt.js");
 
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;
@@ -8,7 +9,7 @@ router.post("/login", async (req, res) => {
     const user = await UserModel.findOne({ email: email });
 
     if (user) {
-      if (user.password === password) {
+      if (isValidPassword(password, user)) {
         if (email === "adminCoder@coder.com" && password === "adminCod3r123") {
           req.session.role = "admin";
         } else {
