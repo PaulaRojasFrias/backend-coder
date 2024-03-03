@@ -2,39 +2,70 @@ const express = require("express");
 const router = express.Router();
 const UserModel = require("../dao/models/user.model");
 const { isValidPassword } = require("../utils/hashBcrypt.js");
+const passport = require("passport");
 
-router.post("/login", async (req, res) => {
-  const { email, password } = req.body;
-  try {
-    const user = await UserModel.findOne({ email: email });
+// router.post("/login", async (req, res) => {
+//   const { email, password } = req.body;
+//   try {
+//     const user = await UserModel.findOne({ email: email });
 
-    if (user) {
-      if (isValidPassword(password, user)) {
-        if (email === "adminCoder@coder.com" && password === "adminCod3r123") {
-          req.session.role = "admin";
-        } else {
-          req.session.role = "usuario";
-        }
+//     if (user) {
+//       if (isValidPassword(password, user)) {
+//         if (email === "adminCoder@coder.com" && password === "adminCod3r123") {
+//           req.session.role = "admin";
+//         } else {
+//           req.session.role = "usuario";
+//         }
 
-        req.session.login = true;
-        req.session.user = {
-          email: user.email,
-          age: user.age,
-          first_name: user.first_name,
-          last_name: user.last_name,
-          role: req.session.role,
-        };
+//         req.session.login = true;
+//         req.session.user = {
+//           email: user.email,
+//           age: user.age,
+//           first_name: user.first_name,
+//           last_name: user.last_name,
+//           role: req.session.role,
+//         };
 
-        res.redirect("/products");
-      } else {
-        res.status(401).send({ error: "Contraseña no valida" });
-      }
-    } else {
-      res.status(404).send({ error: "Usuario no encontrado" });
-    }
-  } catch (error) {
-    res.status(400).send({ error: "Error en el login" });
+//         res.redirect("/products");
+//       } else {
+//         res.status(401).send({ error: "Contraseña no valida" });
+//       }
+//     } else {
+//       res.status(404).send({ error: "Usuario no encontrado" });
+//     }
+//   } catch (error) {
+//     res.status(400).send({ error: "Error en el login" });
+//   }
+// });
+
+//login con passport
+router.post(
+  "/login",
+  passport.authenticate("login", {
+    failureRedirect: "/api/sessions/faillogin",
+  }),
+  async (req, res) => {
+    if (!req.user)
+      return res
+        .status(400)
+        .send({ status: "error", message: "Credenciales invalidas" });
+
+    req.session.user = {
+      first_name: req.user.first_name,
+      last_name: req.user.last_name,
+      age: req.user.age,
+      email: req.user.email,
+    };
+
+    req.session.login = true;
+
+    res.redirect("/products");
   }
+);
+
+router.get("/faillogin", async (req, res) => {
+  console.log("Fallo la estrategia");
+  res.send({ error: "error en la estrategia" });
 });
 
 router.get("/logout", (req, res) => {

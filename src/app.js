@@ -43,21 +43,14 @@ app.use("/api/sessions", sessionRouter);
 
 app.use(express.static("./src/public"));
 
+//passport
+const passport = require("passport");
+const initializePassport = require("./config/passport.config.js");
+
+initializePassport();
+app.use(passport.initialize());
+app.use(passport.session());
+
 const httpServer = app.listen(PUERTO, () => {
   console.log(`Escuchando con express en http://localhost:${PUERTO}`);
 });
-
-//chat
-// const io = new socket.Server(httpServer);
-// const MessageModel = require("./dao/models/message.model.js");
-
-// io.on("connection", (socket) => {
-//   console.log("Nuevo usuario conectado");
-
-//   socket.on("message", async (data) => {
-//     await MessageModel.create(data);
-//     const messages = await MessageModel.find();
-//     console.log(messages);
-//     io.sockets.emit("message", messages);
-//   });
-// });
