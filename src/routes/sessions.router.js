@@ -4,40 +4,6 @@ const UserModel = require("../dao/models/user.model");
 const { isValidPassword } = require("../utils/hashBcrypt.js");
 const passport = require("passport");
 
-// router.post("/login", async (req, res) => {
-//   const { email, password } = req.body;
-//   try {
-//     const user = await UserModel.findOne({ email: email });
-
-//     if (user) {
-//       if (isValidPassword(password, user)) {
-//         if (email === "adminCoder@coder.com" && password === "adminCod3r123") {
-//           req.session.role = "admin";
-//         } else {
-//           req.session.role = "usuario";
-//         }
-
-//         req.session.login = true;
-//         req.session.user = {
-//           email: user.email,
-//           age: user.age,
-//           first_name: user.first_name,
-//           last_name: user.last_name,
-//           role: req.session.role,
-//         };
-
-//         res.redirect("/products");
-//       } else {
-//         res.status(401).send({ error: "Contraseña no valida" });
-//       }
-//     } else {
-//       res.status(404).send({ error: "Usuario no encontrado" });
-//     }
-//   } catch (error) {
-//     res.status(400).send({ error: "Error en el login" });
-//   }
-// });
-
 //login con passport
 router.post(
   "/login",
@@ -75,5 +41,22 @@ router.get("/logout", (req, res) => {
   }
   res.status(200).send({ message: "Login eliminado" });
 });
+
+//github
+router.get(
+  "/github",
+  passport.authenticate("github", { scope: ["user:email"] }),
+  async (req, res) => {}
+);
+
+router.get(
+  "/githubcallback",
+  passport.authenticate("github", { failureRedirect: "/login" }),
+  async (req, res) => {
+    req.session.user = req.user;
+    req.session.login = true;
+    res.redirect("/products");
+  }
+);
 
 module.exports = router;
