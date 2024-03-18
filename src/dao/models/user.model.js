@@ -10,7 +10,6 @@ const userSchema = mongoose.Schema({
   },
   email: {
     type: String,
-    required: true,
     index: true,
     unique: true,
   },
@@ -20,8 +19,13 @@ const userSchema = mongoose.Schema({
   age: {
     type: Number,
   },
+  cart: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "carts",
+  },
   role: {
     type: String,
+    default: "user",
   },
 });
 
