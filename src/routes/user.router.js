@@ -48,17 +48,23 @@ router.post(
       return res
         .status(400)
         .send({ status: "error", message: "Credenciales invalidas" });
+    try {
+      req.session.user = {
+        first_name: req.user.first_name,
+        last_name: req.user.last_name,
+        age: req.user.age,
+        email: req.user.email,
+        role: req.user.role,
+        cart: req.user.cartId,
+      };
 
-    req.session.user = {
-      first_name: req.user.first_name,
-      last_name: req.user.last_name,
-      age: req.user.age,
-      email: req.user.email,
-    };
+      req.session.login = true;
 
-    req.session.login = true;
-
-    res.redirect("/products");
+      res.redirect("/products");
+    } catch (error) {
+      console.error("Error en el registro:", error);
+      res.status(500).send({ status: "error", message: "Error del servidor" });
+    }
   }
 );
 

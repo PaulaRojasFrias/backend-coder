@@ -21,6 +21,8 @@ router.post(
       last_name: req.user.last_name,
       age: req.user.age,
       email: req.user.email,
+      role: req.user.role,
+      cart: req.user.cartId,
     };
 
     req.session.login = true;
@@ -58,5 +60,13 @@ router.get(
     res.redirect("/products");
   }
 );
+
+router.get("/current", (req, res) => {
+  if (req.session.login && req.session.user) {
+    res.status(200).send({ user: req.session.user });
+  } else {
+    res.status(401).send({ error: "No hay sesión de usuario activa" });
+  }
+});
 
 module.exports = router;
